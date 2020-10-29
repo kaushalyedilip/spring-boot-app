@@ -1,27 +1,14 @@
 package com.example.springbootapp.resources;
 
-import com.example.springbootapp.service.TestService;
-import com.example.springbootapp.service.impl.S3ClientService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.time.Duration;
-
-import javax.annotation.PostConstruct;
-
-import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -29,6 +16,23 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.util.Random;
+
+import com.example.springbootapp.service.TestService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.time.Duration;
+
+import io.lettuce.core.RedisClient;
+import redis.clients.jedis.Jedis;
 
 @RestController
 public class TestController {
@@ -44,17 +48,27 @@ public class TestController {
     @Autowired
     private S3Client s3Client;
 
-    //@Autowired
-    //private TestAspect testAspect;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
-    @PostConstruct
-    public void init(){
-        LOGGER.info("+++++++++Initialize S3ClientService+++++++++");
-//        DefaultListableBeanFactory context =
-//            new DefaultListableBeanFactory();
-//        s3ClientService = (S3ClientService) applicationContext.getBean("s3ClientService");
+    @Autowired
+    RedisClient redisClient;
+
+    HashOperations hashOperations;
+
+    @GetMapping("/test_redis")
+    public void testRedis() {
+        //hashOperations = redisTemplate.opsForHash();
+        redisClient.connect();
+        LOGGER.info("test");
+
+
+
+        ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
+
+        valueOperations.set("testKey", "testValue");
+        //hashOperations.put("file", "test","test2");
     }
-
 
     @GetMapping("/test")
     public String test() {
@@ -91,6 +105,19 @@ public class TestController {
         //s3ClientService.putObject(putObjectRequest, RequestBody.fromFile(file));
     }
 
+    @GetMapping("/getObject")
+    public void getObject() {
+
+        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                                                            .bucket("springboard-example")
+                                                            .key("test-object")
+                                                            .build();
+        ResponseInputStream<GetObjectResponse> getObjectResponse = s3Client.getObject(getObjectRequest);
+
+        LOGGER.info("GetObjectResponse status code: {}",getObjectResponse.response().sdkHttpResponse().statusCode());
+
+    }
+
     @GetMapping("/toString")
     public void toStringTest(){
         String str = "Test".toString();
@@ -100,7 +127,6 @@ public class TestController {
     public void getObjectPresignedURL() {
       S3Presigner presigner = S3Presigner.builder()
                                .region(Region.US_EAST_1)
-                               //.endpointOverride(URI.create("http://www.temp.com"))
                                .build();
 
         String key = "test-image";

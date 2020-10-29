@@ -83,8 +83,8 @@ public class TestAspect {
 
 //    @Around("execution(* com.example.springbootapp.service.impl.S3ClientServiceImpl.putObject(software.amazon.awssdk.services.s3.model.PutObjectRequest,"
 //            + "software.amazon.awssdk.core.sync.RequestBody))")
-    //@Around("execution(* com.example.springbootapp.service.impl.S3ClientService.putObject(..))")
-    public Object putObject(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    @Around("execution(* com.example.springbootapp.service.impl.S3ClientService.putObject(..))")
+    public Object getObject(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         LOGGER.info("++++++++S3ClientServiceImpl.putObject() called++++++");
         Object object = proceedingJoinPoint.proceed();
         LOGGER.info("++++++++S3ClientServiceImpl.putObject() completed++++++");
@@ -98,7 +98,7 @@ public class TestAspect {
 //        LOGGER.info("After completion");
 //    }
 
-    @Around("execution(* java.lang.StringBuilder.append(..))")
+    @Around("execution(* software.amazon.awssdk.services.s3.S3Client.getObject(..))")
     public Object testStr(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         LOGGER.info("++++++++StringBuilder.append() called++++++");
         Object obj = proceedingJoinPoint.proceed();
