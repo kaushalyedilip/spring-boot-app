@@ -28,26 +28,26 @@ public class SpringBootAppApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		Map<String, Map<Integer,Integer>> appRatingMap = new HashMap<>();
-
-		String appName = "Facebook";
-		Integer rating = 2;
-
-		if(appRatingMap.containsKey(appName)) {
-			if(appRatingMap.get(appName).containsKey(rating)) {
-				Map<Integer,Integer> ratingMap = appRatingMap.get(appName);
-				ratingMap.put(rating, ratingMap.get(rating)+1);
-			} else {
-				Map<Integer,Integer> ratingMap = new HashMap<>();
-				ratingMap.put(rating, 1);
-				appRatingMap.put(appName, ratingMap);
-			}
-		} else {
-			Map<Integer,Integer> ratingMap = new HashMap<>();
-			ratingMap.put(rating, 1);
-			appRatingMap.put(appName, ratingMap);
-		}
-		System.out.println(appRatingMap);
+//		Map<String, Map<Integer,Integer>> appRatingMap = new HashMap<>();
+//
+//		String appName = "Facebook";
+//		Integer rating = 2;
+//
+//		if(appRatingMap.containsKey(appName)) {
+//			if(appRatingMap.get(appName).containsKey(rating)) {
+//				Map<Integer,Integer> ratingMap = appRatingMap.get(appName);
+//				ratingMap.put(rating, ratingMap.get(rating)+1);
+//			} else {
+//				Map<Integer,Integer> ratingMap = new HashMap<>();
+//				ratingMap.put(rating, 1);
+//				appRatingMap.put(appName, ratingMap);
+//			}
+//		} else {
+//			Map<Integer,Integer> ratingMap = new HashMap<>();
+//			ratingMap.put(rating, 1);
+//			appRatingMap.put(appName, ratingMap);
+//		}
+//		System.out.println(appRatingMap);
 	}
 
 	@Test
@@ -155,11 +155,11 @@ public class SpringBootAppApplicationTests {
 
 		//System.out.println("--------test-------"+jsonObject1.getJSONObject(jsonObject1.toString()));
 
-		System.out.println("+++++++Keys: "+jsonObject1.getJSONObject("test").getJSONObject("file").getJSONObject("key"));
+		//System.out.println("+++++++Keys: "+jsonObject1.getJSONObject("test").getJSONObject("file").getJSONObject("key"));
 		//System.out.println("Map: "+map.keySet());
-		Map<String,String> propss = transformJsonToMap(objectMapper.readTree(jsonResponse),null);
-		System.out.println("--------propss------"+propss);
-		System.out.println("Key Set: "+propss.values());
+//		Map<String,String> propss = transformJsonToMap(objectMapper.readTree(jsonResponse),null);
+//		System.out.println("--------propss------"+propss);
+//		System.out.println("Key Set: "+propss.values());
 	}
 
 	//------------ Transform jackson JsonNode to Map -----------
@@ -235,11 +235,11 @@ public class SpringBootAppApplicationTests {
 			list.add(10);
 			list.add(-20);
 			list.add(null);
-			Comparator<Integer> r = Collections.reverseOrder();
-			Collections.sort(list, r);
-			for(int i : list)
-				System.out.print(i+ " ");
-			System.out.println();
+//			Comparator<Integer> r = Collections.reverseOrder();
+//			Collections.sort(list, r);
+//			for(int i : list)
+//				System.out.print(i+ " ");
+//			System.out.println();
 
 		}
 	}
@@ -256,93 +256,93 @@ public class SpringBootAppApplicationTests {
 	}
 
 	//second highest element from the array
-	@Test
-	public void secondHigest() {
-		int[] arr = {12,3,7,2,15};
-
-		int highest = 0;
-		int secondHighest = 0;
-
-		for(int i=0; i < arr.length; i++) {
-
-			if(arr[i] > arr[i+1]) {
-				highest = arr[i];
-				secondHighest = arr[i+1];
-			} else {
-
-			}
-		}
-	}
-
-	@Test
-	public void emptest() {
-
-		Set<Employee> employeeSet = new HashSet<>();
-
-		Employee emp1 = new Employee("123","XYZ");
-
-		employeeSet.add(emp1);
-
-		emp1.setName("ABC");
-
-		employeeSet.add(emp1);
-
-		System.out.println("Size: "+employeeSet.size());
-		System.out.println("Employees: ");
-
-		//employees.stream().distinct();
-
-	}
-
-	//second most occuring character from string
-	@Test
-	public void testChar(){
-
-		String str = "abccdscadca";
-		//c-4
-		//a-3
-
-		char[] charArray = str.toCharArray();
-		Map<Character,Integer> countChar = new HashMap<>();
-
-		for(int i=0; i< charArray.length; i++) {
-			if(!countChar.containsKey(charArray[i])) {
-				countChar.put(charArray[i], 1);
-			} else {
-				countChar.put(charArray[i], countChar.get(charArray[i])+1);
-			}
-		}
-
-		int mostOccuranceCount = -1;
-		char mostOcc = ' ';
-		for(char c : countChar.keySet()) {
-			if(countChar.get(c) > mostOccuranceCount) {
-				mostOccuranceCount = countChar.get(c);
-				mostOcc = c;
-			}
-		}
-
-		System.out.println("Most Occ char: "+mostOcc);
-	}
-	//middle element from the linked list
-	@Test
-	public void middleElementLinkedList() {
-		LinkedList<String> linkedList = new LinkedList<>();
-		linkedList.add("1");
-		linkedList.add("2");
-		linkedList.add("3");
-		linkedList.add("4");
-		linkedList.add("5");
-
-		System.out.println(linkedList.indexOf(linkedList.getLast())); ;
-
-		//linkedList.
-
-//		for (String str : linkedList) {
-//			System.out.println(str);
+//	@Test
+//	public void secondHigest() {
+//		int[] arr = {12,3,7,2,15};
+//
+//		int highest = 0;
+//		int secondHighest = 0;
+//
+//		for(int i=0; i < arr.length; i++) {
+//
+//			if(arr[i] > arr[i+1]) {
+//				highest = arr[i];
+//				secondHighest = arr[i+1];
+//			} else {
+//
+//			}
 //		}
+//	}
 
-
-	}
+//	@Test
+//	public void emptest() {
+//
+//		Set<Employee> employeeSet = new HashSet<>();
+//
+//		Employee emp1 = new Employee("123","XYZ");
+//
+//		employeeSet.add(emp1);
+//
+//		emp1.setName("ABC");
+//
+//		employeeSet.add(emp1);
+//
+//		System.out.println("Size: "+employeeSet.size());
+//		System.out.println("Employees: ");
+//
+//		//employees.stream().distinct();
+//
+//	}
+//
+//	//second most occuring character from string
+//	@Test
+//	public void testChar(){
+//
+//		String str = "abccdscadca";
+//		//c-4
+//		//a-3
+//
+//		char[] charArray = str.toCharArray();
+//		Map<Character,Integer> countChar = new HashMap<>();
+//
+//		for(int i=0; i< charArray.length; i++) {
+//			if(!countChar.containsKey(charArray[i])) {
+//				countChar.put(charArray[i], 1);
+//			} else {
+//				countChar.put(charArray[i], countChar.get(charArray[i])+1);
+//			}
+//		}
+//
+//		int mostOccuranceCount = -1;
+//		char mostOcc = ' ';
+//		for(char c : countChar.keySet()) {
+//			if(countChar.get(c) > mostOccuranceCount) {
+//				mostOccuranceCount = countChar.get(c);
+//				mostOcc = c;
+//			}
+//		}
+//
+//		System.out.println("Most Occ char: "+mostOcc);
+//	}
+//	//middle element from the linked list
+//	@Test
+//	public void middleElementLinkedList() {
+//		LinkedList<String> linkedList = new LinkedList<>();
+//		linkedList.add("1");
+//		linkedList.add("2");
+//		linkedList.add("3");
+//		linkedList.add("4");
+//		linkedList.add("5");
+//
+//		System.out.println(linkedList.indexOf(linkedList.getLast())); ;
+//
+//		//linkedList.
+//
+////		for (String str : linkedList) {
+////			System.out.println(str);
+////		}
+//
+//
+//	}
 
 }

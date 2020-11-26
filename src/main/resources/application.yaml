@@ -1,0 +1,6 @@
+service:
+  http:
+    headers:
+      cors:
+        allowedOrigins:
+          - http://localhost:9090
